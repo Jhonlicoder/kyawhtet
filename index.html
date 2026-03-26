@@ -15,6 +15,62 @@
     <!-- CSS Link (ဒီနေရာမှာ CSS file ကို ချိတ်ထားပါတယ် ) -->
     <link rel="stylesheet" href="css/style.css">
 </head>
+    <!-- AI Chatbot UI -->
+<div id="chat-bot" style="position: fixed; bottom: 20px; right: 20px; z-index: 1000;">
+    <button onclick="toggleChat()" style="background: #2563eb; color: white; border: none; padding: 15px 20px; border-radius: 50px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.2); font-weight: bold;">💬 Chat with AI</button>
+    
+    <div id="chat-window" style="display: none; width: 300px; height: 400px; background: white; border-radius: 15px; box-shadow: 0 5px 25px rgba(0,0,0,0.2); flex-direction: column; position: absolute; bottom: 70px; right: 0; overflow: hidden; border: 1px solid #eee;">
+        <div style="background: #2563eb; color: white; padding: 15px; font-weight: bold;">AI Assistant</div>
+        <div id="chat-content" style="flex: 1; padding: 15px; overflow-y: auto; font-size: 14px; display: flex; flex-direction: column; gap: 10px;">
+            <div style="background: #f1f5f9; padding: 10px; border-radius: 10px; align-self: flex-start;">Hi! I'm Kyaw Htet's AI assistant. How can I help you today?</div>
+        </div>
+        <div style="padding: 10px; border-top: 1px solid #eee; display: flex; gap: 5px;">
+            <input id="user-input" type="text" placeholder="Type a message..." style="flex: 1; border: 1px solid #ddd; padding: 8px; border-radius: 5px; outline: none;">
+            <button onclick="sendMessage()" style="background: #2563eb; color: white; border: none; padding: 8px 12px; border-radius: 5px; cursor: pointer;">Send</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleChat() {
+        const chatWindow = document.getElementById('chat-window');
+        chatWindow.style.display = chatWindow.style.display === 'none' ? 'flex' : 'none';
+    }
+
+    function sendMessage() {
+        const input = document.getElementById('user-input');
+        const content = document.getElementById('chat-content');
+        
+        if (input.value.trim() !== "") {
+            // User Message
+            const userMsg = document.createElement('div');
+            userMsg.innerText = input.value;
+            userMsg.style = "background: #2563eb; color: white; padding: 10px; border-radius: 10px; align-self: flex-end; max-width: 80%;";
+            content.appendChild(userMsg);
+            
+            const text = input.value.toLowerCase();
+            input.value = "";
+            
+            // AI Response (Simple Logic)
+            setTimeout(() => {
+                const aiMsg = document.createElement('div');
+                aiMsg.style = "background: #f1f5f9; padding: 10px; border-radius: 10px; align-self: flex-start; max-width: 80%;";
+                
+                if (text.includes("hello") || text.includes("hi")) {
+                    aiMsg.innerText = "Hello! Nice to meet you. Would you like to see Kyaw Htet's portfolio?";
+                } else if (text.includes("price") || text.includes("cost")) {
+                    aiMsg.innerText = "For project pricing, please contact Kyaw Htet directly via email or the contact form.";
+                } else {
+                    aiMsg.innerText = "Thanks for your message! Kyaw Htet will get back to you soon.";
+                }
+                
+                content.appendChild(aiMsg);
+                content.scrollTop = content.scrollHeight;
+            }, 1000);
+        }
+    }
+</script>
+
 <body>
 
     <!-- Navigation -->
